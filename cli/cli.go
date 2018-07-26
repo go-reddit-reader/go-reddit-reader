@@ -42,7 +42,7 @@ func Cli() {
 				},
 				cli.StringFlag{
 					Name:        "sort",
-					Usage:       "sort posts [Hot] [New] [Controversial] [Top] [Rising]",
+					Usage:       "sort posts [hot] [new] [controversial] [top] [rising]",
 					Value:       "hot",
 					Destination: &sort,
 				},
@@ -65,10 +65,8 @@ func Cli() {
 				},
 			},
 			Action: func(c *cli.Context) error {
-				err := redditfuncs.GetSubReddits(username, password, subreddit, number)
-				if err != nil {
-					log.Println("Could not return any subreddit submissions")
-				}
+				//redditfuncs.GetSubReddits(username, password, subreddit, sort, number)
+				redditfuncs.GetSubReddits(username, password, subreddit, sort, number)
 				return nil
 			},
 		},
