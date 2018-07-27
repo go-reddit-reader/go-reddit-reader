@@ -42,9 +42,9 @@ func Cli() {
 					Destination: &subreddit,
 				},
 				cli.StringFlag{
-					Name:        "sort",
-					Usage:       "sort posts [hot] [new] [controversial] [top] [rising]",
-					Value:       "hot",
+					Name:  "sort",
+					Usage: "sort posts [hot] [new] [controversial] [top] [rising]",
+					//Value:       "hot",
 					Destination: &sort,
 				},
 				cli.IntFlag{
@@ -126,9 +126,9 @@ func Cli() {
 				},
 			},
 			Action: func(c *cli.Context) error {
-				if reddituser {
+				if len(reddituser) > 0 {
 					redditfuncs.AboutRedditor(username, password, reddituser)
-				} else if subreddit {
+				} else if len(subreddit) > 0 {
 					redditfuncs.SubRedditInfo(username, password, subreddit)
 				}
 				return nil
