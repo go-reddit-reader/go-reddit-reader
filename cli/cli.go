@@ -29,6 +29,7 @@ func Cli() {
 	var number int
 	var username string
 	var password string
+	var reddituser string
 	app.Commands = []cli.Command{
 		{
 			Name:    "list",
@@ -67,6 +68,69 @@ func Cli() {
 			Action: func(c *cli.Context) error {
 				//redditfuncs.GetSubReddits(username, password, subreddit, sort, number)
 				redditfuncs.GetSubReddits(username, password, subreddit, sort, number)
+				return nil
+			},
+		},
+		{
+			Name:    "comments",
+			Aliases: []string{"c"},
+			Usage:   "List comments from subreddit",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:        "subreddit, sr",
+					Usage:       "the subreddit",
+					Destination: &subreddit,
+				},
+				cli.StringFlag{
+					Name:        "username, u",
+					Usage:       "Reddit username",
+					Destination: &username,
+				},
+				cli.StringFlag{
+					Name:        "password, p",
+					Usage:       "Reddit password",
+					EnvVar:      "REDDIT_PASSWORD",
+					Destination: &password,
+				},
+			},
+			Action: func(c *cli.Context) error {
+				redditfuncs.SubRedditComments(username, password, subreddit)
+				return nil
+			},
+		},
+		{
+			Name:    "info",
+			Aliases: []string{"i"},
+			Usage:   "Info about a user or subreddit",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:        "subreddit, sr",
+					Usage:       "the subreddit",
+					Destination: &subreddit,
+				},
+				cli.StringFlag{
+					Name:        "username, u",
+					Usage:       "Your Reddit username",
+					Destination: &username,
+				},
+				cli.StringFlag{
+					Name:        "password, p",
+					Usage:       "Your Reddit password",
+					EnvVar:      "REDDIT_PASSWORD",
+					Destination: &password,
+				},
+				cli.StringFlag{
+					Name:        "reddituser, ru",
+					Usage:       "The Reddit username you want get info on",
+					Destination: &reddituser,
+				},
+			},
+			Action: func(c *cli.Context) error {
+				if reddituser {
+					redditfuncs.AboutRedditor(username, password, reddituser)
+				} else if subreddit {
+					redditfuncs.SubRedditInfo(username, password, subreddit)
+				}
 				return nil
 			},
 		},
